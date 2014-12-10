@@ -10,7 +10,7 @@
     "keywords": ["zxing", "qrcode"],
     "license": "MIT",
     "require": {
-        "php": ">=5.3.2",
+        "php": ">=5.3.2"
     },
     "target-dir": "James2001/Zxing"
 }
