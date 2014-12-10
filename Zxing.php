@@ -12,7 +12,7 @@ class Zxing
     public function __construct($key, $options = "", $libBinPath = "")
     {
         if(!$libBinPath){
-            $libBinPath = getcwd(). DIRECTORY_SEPARATOR . "bin_lib";
+            $libBinPath = dirname(__FILE__). DIRECTORY_SEPARATOR . "bin_lib";
         }
 
         $this->key = $key;
@@ -110,6 +110,7 @@ class Zxing
         $cmd .= $this->javaSeparator . $this->libBinPath . DIRECTORY_SEPARATOR;
         $cmd .= 'core.jar com.google.zxing.client.j2se.CommandLineRunner ' . $image_path;
         $cmd .= " " . $this->options;
+        var_dump($cmd);
         $output = array();
         exec($cmd, $output, $return_var);
 
@@ -117,6 +118,7 @@ class Zxing
             foreach ($output as $value)//Recherche du mot ged dans le code bare pour être sur d'être sur le bon QRCODE
             {
                 if (($pos = strpos($value, $this->key)) !== false) {
+                    var_dump($value);
                     return substr($value, $pos + strlen($this->key));
                 }
             }
