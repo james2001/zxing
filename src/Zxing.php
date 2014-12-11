@@ -12,7 +12,7 @@ class Zxing
     public function __construct($key = "", $options = "", $libBinPath = "")
     {
         if(!$libBinPath){
-            $libBinPath = dirname(__FILE__). DIRECTORY_SEPARATOR . "bin_lib";
+            $libBinPath = dirname(__FILE__). DIRECTORY_SEPARATOR . "../bin_lib";
         }
 
         $this->key = $key;
@@ -112,7 +112,7 @@ class Zxing
         $cmd .= " " . $this->options;
         $output = array();
         exec($cmd, $output, $return_var);
-
+var_dump($cmd);
         if ($return_var == 0 && is_array($output)) {
             if("" == $this->key){
                 $valueIndex = array_search('Parsed result:',$output) + 1;
