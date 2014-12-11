@@ -1,6 +1,6 @@
 <?php
 
-namespace james2001;
+namespace James2001;
 
 class Zxing
 {
