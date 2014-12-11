@@ -116,7 +116,7 @@ class Zxing
         if ($return_var == 0 && is_array($output)) {
             foreach ($output as $value)//Recherche du mot ged dans le code bare pour être sur d'être sur le bon QRCODE
             {
-                if (($pos = strpos($value, $this->key)) !== false) {
+                if (($pos = strpos($value, $this->key)) !== false && strpos($value, 'file:') === false) {
                     return substr($value, $pos + strlen($this->key));
                 }
             }
