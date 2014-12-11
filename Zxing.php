@@ -9,7 +9,7 @@ class Zxing
     private $libBinPath;
     private $javaSeparator;
 
-    public function __construct($key, $options = "", $libBinPath = "")
+    public function __construct($key = "", $options = "", $libBinPath = "")
     {
         if(!$libBinPath){
             $libBinPath = dirname(__FILE__). DIRECTORY_SEPARATOR . "bin_lib";
@@ -114,10 +114,16 @@ class Zxing
         exec($cmd, $output, $return_var);
 
         if ($return_var == 0 && is_array($output)) {
-            foreach ($output as $value)//Recherche du mot ged dans le code bare pour être sur d'être sur le bon QRCODE
-            {
-                if (($pos = strpos($value, $this->key)) !== false && strpos($value, 'file:') === false) {
-                    return substr($value, $pos + strlen($this->key));
+            if("" == $this->key){
+                $valueIndex = array_search('Parsed result:',$output) + 1;
+                return $output[$valueIndex];
+            }
+            else{
+                foreach ($output as $value)//Recherche du mot ged dans le code bare pour être sur d'être sur le bon QRCODE
+                {
+                    if (($pos = strpos($value, $this->key)) !== false && strpos($value, 'file:') === false) {
+                        return substr($value, $pos + strlen($this->key));
+                    }
                 }
             }
         }

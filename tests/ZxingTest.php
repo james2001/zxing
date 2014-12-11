@@ -25,7 +25,7 @@ class ZxingTest extends \PHPUnit_Framework_TestCase {
 
     public function testConstruct()
     {
-        $zxing = new Zxing('test;');
+        $zxing = new Zxing();
         $this->assertInstanceOf('James2001\Zxing', $zxing);
     }
 
@@ -35,6 +35,8 @@ class ZxingTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals('my_info',$this->zxing->findFirst($imagePath));
         $this->zxing->setKey('test');
         $this->assertEquals(';my_info',$this->zxing->findFirst($imagePath));
+        $this->zxing->setKey('');
+        $this->assertEquals('test;my_info',$this->zxing->findFirst($imagePath));
     }
 }
 
