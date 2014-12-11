@@ -12,7 +12,6 @@
     "require": {
         "php": ">=5.3.2"
     },
-    "target-dir": "James2001/Zxing",
     "autoload": {
         "psr-0": {"james2001": ""}
     }
