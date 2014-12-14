@@ -1,6 +1,6 @@
 {
     "name": "james2001/zxing",
-    "description": "This is a Symfony2 Bundle, thanks to the Odtphp library",
+    "description": "This is a adapter for zxing (java qrcode reader)",
     "authors": [
         {
             "name": "Rathgeber Stephane",
