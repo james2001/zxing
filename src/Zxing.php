@@ -97,6 +97,42 @@ class Zxing
         $this->libBinPath = $libBinPath;
     }
 
+    /**
+     * Find all or one only Qrcode(s) stared with key
+     *
+     * @param $image_path the path of the image to be scanned for qrCode
+     * @param $firstOnly only return the first qrcode
+     * @return mixed
+     */
+    public function find($image_path, $firstOnly = false) {
+        $cmd = 'java -cp ' . $this->libBinPath . DIRECTORY_SEPARATOR . 'javase.jar';
+        $cmd .= $this->javaSeparator . $this->libBinPath . DIRECTORY_SEPARATOR;
+        $cmd .= 'core.jar com.google.zxing.client.j2se.CommandLineRunner ' . $image_path;
+        $cmd .= " --multi " . $this->options;
+        $output = [];
+        exec($cmd, $output, $return_var);
+
+        $return = [];
+        if (($return_var === 0) && is_array($output)) {
+            while(($parsedIndex = array_search('Parsed result:', $output)) !== false) {
+                $qrValueIndex = $parsedIndex + 1;
+                $qrValue = $output[$qrValueIndex];
+
+                if (empty($this->key) || (strpos($qrValue, $this->key) !== false)) {
+                    $qrValue = str_replace($this->key, '', $output[$qrValueIndex]);
+
+                    if ($firstOnly) {
+                        return $qrValue;
+                    }
+                    $return[] = $qrValue;
+                }
+
+                unset($output[$parsedIndex]);
+            }
+        }
+
+        return (!empty($return)) ? $return : false;
+    }
 
     /**
      * Find the first Qrcode stared with key
@@ -106,28 +142,18 @@ class Zxing
      */
     public function findFirst($image_path)
     {
-        $cmd = 'java -cp ' . $this->libBinPath . DIRECTORY_SEPARATOR . 'javase.jar';
-        $cmd .= $this->javaSeparator . $this->libBinPath . DIRECTORY_SEPARATOR;
-        $cmd .= 'core.jar com.google.zxing.client.j2se.CommandLineRunner ' . $image_path;
-        $cmd .= " " . $this->options;
-        $output = array();
-        exec($cmd, $output, $return_var);
+        return $this->find($image_path, true);
+    }
 
-        if ($return_var == 0 && is_array($output)) {
-            if("" == $this->key){
-                $valueIndex = array_search('Parsed result:',$output) + 1;
-                return $output[$valueIndex];
-            }
-            else{
-                foreach ($output as $value)//Recherche du mot ged dans le code bare pour être sur d'être sur le bon QRCODE
-                {
-                    if (($pos = strpos($value, $this->key)) !== false && strpos($value, 'file:') === false) {
-                        return substr($value, $pos + strlen($this->key));
-                    }
-                }
-            }
-        }
-
-        return false;
+    /**
+     * Find all Qrcodes stared with key
+     *
+     * @author halfred
+     * @param $image_path
+     * @return array
+     */
+    public function findMulti($image_path)
+    {
+        return $this->find($image_path);
     }
 }
