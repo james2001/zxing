@@ -130,4 +130,36 @@ class Zxing
 
         return false;
     }
+
+    /**
+     * Find all Qrcodes stared with key
+     *
+     * @author halfred
+     * @param $image_path
+     * @return array
+     */
+    public function findMulti($image_path)
+    {
+        $cmd = 'java -cp ' . $this->libBinPath . DIRECTORY_SEPARATOR . 'javase.jar';
+        $cmd .= $this->javaSeparator . $this->libBinPath . DIRECTORY_SEPARATOR;
+        $cmd .= 'core.jar com.google.zxing.client.j2se.CommandLineRunner ' . $image_path;
+        $cmd .= " --multi " . $this->options;
+        $output = [];
+        exec($cmd, $output, $return_var);
+
+        $return = [];
+        if (($return_var === 0) && is_array($output)) {
+            while(($parsedIndex = array_search('Parsed result:', $output)) !== false) {
+                $qrValueIndex = $parsedIndex + 1;
+                $qrValue = $output[$qrValueIndex];
+
+                if (empty($this->key) || (strpos($qrValue, $this->key) !== false)) {
+                    $return[] = $qrValue;
+                }
+                unset($output[$parsedIndex]);
+            }
+        }
+
+        return (!empty($return)) ? $return : false;
+    }
 }
