@@ -29,14 +29,45 @@ class ZxingTest extends \PHPUnit_Framework_TestCase {
         $this->assertInstanceOf('James2001\Zxing', $zxing);
     }
 
-    public function testFindCode()
+    public function testFindFirstCode()
     {
         $imagePath = dirname(__FILE__) .DIRECTORY_SEPARATOR.'test.jpg';
-        $this->assertEquals('my_info',$this->zxing->findFirst($imagePath));
+
+        $this->zxing->setKey('test;');
+        $this->assertEquals('my_first_info',$this->zxing->findFirst($imagePath));
         $this->zxing->setKey('test');
-        $this->assertEquals(';my_info',$this->zxing->findFirst($imagePath));
+        $this->assertEquals(';my_first_info',$this->zxing->findFirst($imagePath));
         $this->zxing->setKey('');
-        $this->assertEquals('test;my_info',$this->zxing->findFirst($imagePath));
+        $this->assertEquals('test;my_first_info',$this->zxing->findFirst($imagePath));
+    }
+
+    public function testFindMultiCode()
+    {
+        $imagePath = dirname(__FILE__) .DIRECTORY_SEPARATOR.'test.jpg';
+
+        $qrValues = [
+            'my_first_info',
+            'my_second_info',
+            'my_third_info',
+        ];
+        $this->zxing->setKey('test;');
+        $this->assertEquals($qrValues, $this->zxing->findMulti($imagePath));
+
+        $qrValues = [
+            ';my_first_info',
+            ';my_second_info',
+            ';my_third_info',
+        ];
+        $this->zxing->setKey('test');
+        $this->assertEquals($qrValues, $this->zxing->findMulti($imagePath));
+
+        $qrValues = [
+            'test;my_first_info',
+            'test;my_second_info',
+            'test;my_third_info',
+        ];
+        $this->zxing->setKey('');
+        $this->assertEquals($qrValues, $this->zxing->findMulti($imagePath));
     }
 }
 
