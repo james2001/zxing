@@ -1,3 +1,4 @@
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/f49ca80c-455f-43e8-87cd-8a248dd7ba30/mini.png)](https://insight.sensiolabs.com/projects/f49ca80c-455f-43e8-87cd-8a248dd7ba30)
 PHP QRcode reader (zxing)
 =========================
 
