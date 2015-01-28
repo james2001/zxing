@@ -1,4 +1,4 @@
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/f49ca80c-455f-43e8-87cd-8a248dd7ba30/mini.png)](https://insight.sensiolabs.com/projects/f49ca80c-455f-43e8-87cd-8a248dd7ba30) [![Code Climate](https://codeclimate.com/github/james2001/zxing/badges/gpa.svg)](https://codeclimate.com/github/james2001/zxing)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/f49ca80c-455f-43e8-87cd-8a248dd7ba30/mini.png)](https://insight.sensiolabs.com/projects/f49ca80c-455f-43e8-87cd-8a248dd7ba30) [![Code Climate](https://codeclimate.com/github/james2001/zxing/badges/gpa.svg)](https://codeclimate.com/github/james2001/zxing) [![Build Status](https://travis-ci.org/james2001/zxing.svg?branch=master)](https://travis-ci.org/james2001/zxing)
 
 PHP QRcode reader (zxing)
 =========================
