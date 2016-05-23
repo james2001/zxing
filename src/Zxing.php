@@ -9,10 +9,10 @@ class Zxing
     private $libBinPath;
     private $javaSeparator;
 
-    public function __construct($key = "", $options = "", $libBinPath = "")
+    public function __construct($key = '', $options = '', $libBinPath = '')
     {
-        if(!$libBinPath){
-            $libBinPath = dirname(__FILE__). DIRECTORY_SEPARATOR . "../bin_lib";
+        if (!$libBinPath) {
+            $libBinPath = dirname(__FILE__).DIRECTORY_SEPARATOR.'../bin_lib';
         }
 
         $this->key = $key;
@@ -23,11 +23,10 @@ class Zxing
         } else {
             $this->javaSeparator = ':';
         }
-
     }
 
     /**
-     * The key would be start qrcode
+     * The key would be start qrcode.
      *
      * @return string
      */
@@ -37,7 +36,7 @@ class Zxing
     }
 
     /**
-     * The key would be start qrcode
+     * The key would be start qrcode.
      *
      * @param string $key
      */
@@ -47,7 +46,7 @@ class Zxing
     }
 
     /**
-     * List of option
+     * List of option.
      *
      * @return string
      */
@@ -68,7 +67,7 @@ class Zxing
      * --crop=left,top,width,height: Only examine cropped region of input image(s)
      * --possibleFormats=barcodeFormat[,barcodeFormat2...] where barcodeFormat is any
      * of: AZTEC,CODABAR,CODE_39,CODE_93,CODE_128,DATA_MATRIX,EAN_8,EAN_13,ITF,MAXICODE,
-     * PDF_417,QR_CODE,RSS_14,RSS_EXPANDED,UPC_A,UPC_E,UPC_EAN_EXTENSION
+     * PDF_417,QR_CODE,RSS_14,RSS_EXPANDED,UPC_A,UPC_E,UPC_EAN_EXTENSION.
      *
      * ex: --try_harder --multi
      *
@@ -80,7 +79,7 @@ class Zxing
     }
 
     /**
-     * The path for core.jar and javase.jar
+     * The path for core.jar and javase.jar.
      *
      * @return string
      */
@@ -98,23 +97,25 @@ class Zxing
     }
 
     /**
-     * Find all or one only Qrcode(s) stared with key
+     * Find all or one only Qrcode(s) stared with key.
      *
      * @param $image_path the path of the image to be scanned for qrCode
      * @param $firstOnly only return the first qrcode
+     *
      * @return mixed
      */
-    public function find($image_path, $firstOnly = false) {
-        $cmd = 'java -cp ' . $this->libBinPath . DIRECTORY_SEPARATOR . 'javase.jar';
-        $cmd .= $this->javaSeparator . $this->libBinPath . DIRECTORY_SEPARATOR;
-        $cmd .= 'core.jar com.google.zxing.client.j2se.CommandLineRunner ' . $image_path;
-        $cmd .= " --multi " . $this->options;
+    public function find($image_path, $firstOnly = false)
+    {
+        $cmd = 'java -cp '.$this->libBinPath.DIRECTORY_SEPARATOR.'javase.jar';
+        $cmd .= $this->javaSeparator.$this->libBinPath.DIRECTORY_SEPARATOR;
+        $cmd .= 'core.jar com.google.zxing.client.j2se.CommandLineRunner '.$image_path;
+        $cmd .= ' --multi '.$this->options;
         $output = [];
         exec($cmd, $output, $return_var);
 
         $return = [];
         if (($return_var === 0) && is_array($output)) {
-            while(($parsedIndex = array_search('Parsed result:', $output)) !== false) {
+            while (($parsedIndex = array_search('Parsed result:', $output)) !== false) {
                 $qrValueIndex = $parsedIndex + 1;
                 $qrValue = $output[$qrValueIndex];
 
@@ -135,9 +136,10 @@ class Zxing
     }
 
     /**
-     * Find the first Qrcode stared with key
+     * Find the first Qrcode stared with key.
      *
      * @param $image_path
+     *
      * @return string
      */
     public function findFirst($image_path)
@@ -146,10 +148,12 @@ class Zxing
     }
 
     /**
-     * Find all Qrcodes stared with key
+     * Find all Qrcodes stared with key.
      *
      * @author halfred
+     *
      * @param $image_path
+     *
      * @return array
      */
     public function findMulti($image_path)

@@ -3,16 +3,14 @@
  * Created by PhpStorm.
  * User: Stephane
  * Date: 11/12/2014
- * Time: 20:39
+ * Time: 20:39.
  */
-
 namespace James2001\Test;
-
 
 use James2001\Zxing;
 
-class ZxingTest extends \PHPUnit_Framework_TestCase {
-
+class ZxingTest extends \PHPUnit_Framework_TestCase
+{
     /**
      * @var Zxing
      */
@@ -31,19 +29,19 @@ class ZxingTest extends \PHPUnit_Framework_TestCase {
 
     public function testFindFirstCode()
     {
-        $imagePath = dirname(__FILE__) .DIRECTORY_SEPARATOR.'test.jpg';
+        $imagePath = dirname(__FILE__).DIRECTORY_SEPARATOR.'test.jpg';
 
         $this->zxing->setKey('test;');
-        $this->assertEquals('my_first_info',$this->zxing->findFirst($imagePath));
+        $this->assertEquals('my_first_info', $this->zxing->findFirst($imagePath));
         $this->zxing->setKey('test');
-        $this->assertEquals(';my_first_info',$this->zxing->findFirst($imagePath));
+        $this->assertEquals(';my_first_info', $this->zxing->findFirst($imagePath));
         $this->zxing->setKey('');
-        $this->assertEquals('test;my_first_info',$this->zxing->findFirst($imagePath));
+        $this->assertEquals('test;my_first_info', $this->zxing->findFirst($imagePath));
     }
 
     public function testFindMultiCode()
     {
-        $imagePath = dirname(__FILE__) .DIRECTORY_SEPARATOR.'test.jpg';
+        $imagePath = dirname(__FILE__).DIRECTORY_SEPARATOR.'test.jpg';
 
         $qrValues = [
             'my_first_info',
@@ -70,4 +68,3 @@ class ZxingTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($qrValues, $this->zxing->findMulti($imagePath));
     }
 }
-
